@@ -78,6 +78,9 @@ section .inner .wrap article p{
     opacity: 0;
     transition: 0.5s;
 }
+section .inner .wrap article:hover p{
+    opacity: 1;
+}
 section .inner .wrap article::after{
     /* 가상선택자를 사용하면 써야 함 */
     content: '';
