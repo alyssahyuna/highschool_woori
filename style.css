@@ -1,0 +1,151 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+*{margin: 0px; padding: 0px; box-sizing: border-box; font-family: "quicksand";}
+ul,ol,li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+
+section{
+    /* 섹션이 브라우저 전체의 너비를 가지도록 하겠다는 코드 */
+    width: 100%;
+    /* 섹션의 공간에 패딩을 부여하는데 padding-top 180px, 좌우 padding 0, padding-bottom 150을 주겠다는 뜻 */
+    padding: 180px 0 150px;
+}
+section .inner{
+    /* 12컬럼 그리드를 사용하기 위해서 1180px로 설정 */
+    width: 1180px;
+    /* inner을 가운데 배치하도록 하는 코드
+    바깥 여백 중 위아래는 0, 좌우로는 가운데 배치될 수 있도록 auto를 부여 */
+    margin: 0 auto;
+}
+section .inner h1{
+    font: bold 24px/1 'arial';
+    /* 폰트웨이트는 굵게, 폰트 크기 24px, 폰트 높이는 1 폰트 패밀리는 arial */
+    color: #555;
+    /* 폰트 컬러는 #555 */
+    margin-bottom: 50px;
+    /* h1과 wrap과의 바깥 간격을 50px 부여 */
+    text-align: center;
+    /* 글자를 가운데 정렬 */
+}
+/* 플롯 헤제하기 */
+/* wrap의 자식요소인 article을 float하면서 부모인 wrap이 자식요소들의 높이를 인식하지 못하게 되어 높이를 인식할 수 있도록 float을 해제하는 문구 */
+/* ::after을 무조건 부모요소 뒤에 타이핑해야 함! */
+section .inner .wrap::after{
+    content: '';
+    display: block;
+    clear: both;
+}
+section .inner .wrap article{
+    width: 280px;
+    /* 12컬럼 그리드에서 4단이 280임. */
+    height: 200px;
+    float: left;
+    /* 블록요소를 좌우 배치하기 위해서 float을 부여 */
+    margin-right: 20px;
+    /* 각각의 블록요소 간격을 준 것 */
+    position: relative;
+    overflow: hidden;
+    /* article 영역을 벗어나는 컨텐츠를 잘라서 다른 영역을 침범하지 않게 함. */
+}
+/* 280에 모두 공통적으로 20px의 마진 오른쪽을 주었기 때문에 1200px이 되면서 inner의 1180을 넘기게 되어 레이아웃이 깨짐.
+따라서 마지막 article 요소를 선택한 뒤 마진 오른쪽을 0을 주어 없앰. */
+section .inner .wrap article:last-child{
+    margin-right: 0px;
+}
+/* 이미지를 article 안에 꽉 채워서 넣기 위해 쓰는 3종 세트 코드 (암기 필수!) */
+section .inner .wrap article img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 1s;
+    /* 호버이벤트시 커지는 효과에 트랜지션을 넣어줌. */
+}
+/* article에 호버시 img를 1.2배 키움. */
+section .inner .wrap article:hover img{
+    transform: scale(1.2);
+}
+section .inner .wrap article p{
+    font: 20px/1 'arial';
+    /*폰트 크기 20px, 폰트 높이는 1 폰트 패밀리는 arial  */
+    color: #fff;
+    /* 폰트 컬러는 #fff */
+    position: absolute;
+    z-index: 3;
+    opacity: 0;
+    transition: 0.5s;
+}
+section .inner .wrap article::after{
+    /* 가상선택자를 사용하면 써야 함 */
+    content: '';
+    /* 가상선택자의 너비 높이를 지정해주기 위해 부여 */
+    display: block;
+    background-color: rgba(82, 140, 73, 0.8);
+    /* article과 같은 너비, 높이의 가상선택자 마스크를 만듬. */
+    width: 100%;
+    height: 100%;
+    /* after로 잡은 가상선택자 마스크를 겹치기 위해서 밑에 3가지 코드를 작성 */
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    /* 호버 시에 마스크가 이동하는데 트랜지션을 걸어줌. */
+    transition: all 0.5s;
+}
+/* 첫번째 article의 after을 선택함. */
+section .inner .wrap article:nth-of-type(1)::after{
+    top: 0; left: 280px;
+}
+/* 첫번째 article에 호버할 때 그때의 after */
+section .inner .wrap article:nth-of-type(1):hover::after{
+    top: 0; left: -230px;
+/* left: 0;이면 아티클 위에 있고, 음수를 주어야 왼쪽으로 감. */
+}
+section .inner .wrap article:nth-of-type(1) p{
+    /* p태그 전체에 포지션을 부여하였기에 좌표 설정 가능 */
+    top: 45%;
+    left: -6%;
+    transform: rotate(90deg);
+}
+
+section .inner .wrap article:nth-of-type(2)::after{
+    top: -200px; left: 0;
+}
+section .inner .wrap article:nth-of-type(2):hover::after{
+    top: 150px; left: 0;
+}
+section .inner .wrap article:nth-of-type(2) p{
+    /* p태그 전체에 포지션을 부여하였기에 좌표 설정 가능 */
+    top: 83%;
+    left: 35%;
+    transform: rotate(0deg);
+}
+
+section .inner .wrap article:nth-of-type(3)::after{
+    top: 200px; left: 0;
+}
+section .inner .wrap article:nth-of-type(3):hover::after{
+    top: -150px; left: 0;
+}
+section .inner .wrap article:nth-of-type(3) p{
+    /* p태그 전체에 포지션을 부여하였기에 좌표 설정 가능 */
+    top: 8%;
+    left: 35%;
+    transform: rotate(0deg);
+}
+
+section .inner .wrap article:nth-of-type(4)::after{
+    top: 0; left: -280px;
+} 
+section .inner .wrap article:nth-of-type(4):hover::after{
+    top: 0; left: 230px;
+}
+section .inner .wrap article:nth-of-type(4) p{
+    /* p태그 전체에 포지션을 부여하였기에 좌표 설정 가능 */
+    top: 45%;
+    left: 78%;
+    transform: rotate(-90deg);
+}
